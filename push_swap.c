@@ -74,19 +74,13 @@ void	start(char *args)
 	start_sort(&a, &b, &tmpa);
 }
 
-int	main(int argc, char **argv)
+bool	check_args(char **argv)
 {
-	char	*args;
-	int		i;
-	int		j;
-	bool	flag;
+	int	i;
+	int	j;
 
-	if (argc < 2)
-		return (0);
 	i = 1;
 	j = 0;
-	args = "";
-	flag = false;
 	while (argv[i])
 	{
 		j = 0;
@@ -96,12 +90,27 @@ int	main(int argc, char **argv)
 			if (argv[i][j] == '\0')
 			{
 				write(2, "Errorrrr\n", 10);
-				return(1);
+				return(false);
 			}
 		}
 		i++;
 	}
+	return (true);
+}
+
+int	main(int argc, char **argv)
+{
+	char	*args;
+	int		i;
+	bool	flag;
+
+	if (argc < 2)
+		return (0);
 	i = 1;
+	args = "";
+	flag = false;
+	if (check_args(argv) == false)
+		return(1);
 	while (argv[i])
 	{
 		args = ft_strjoin(args, " ", flag);
@@ -113,3 +122,4 @@ int	main(int argc, char **argv)
 	free(args);
 	return (0);
 }
+
